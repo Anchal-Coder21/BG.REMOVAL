@@ -1,0 +1,26 @@
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import connectDB from './configs/mongodb.js';
+
+const app = express();
+const PORT = process.env.PORT || 4000;
+
+const startServer = async () => {
+  try {
+    await connectDB(); // should log "Database connected" from inside connectDB
+
+    app.use(express.json());
+    app.use(cors());
+
+    app.get('/', (req, res) => res.send('API Working'));
+
+    app.listen(PORT, () => {
+      console.log(`Server is running at http://localhost:${PORT}`);
+    });
+  } catch (err) {
+    console.error('Failed to start server:', err);
+  }
+};
+
+startServer();
