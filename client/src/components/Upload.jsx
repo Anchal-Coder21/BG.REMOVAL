@@ -1,5 +1,7 @@
 import React from 'react';
 import { assets } from '../assets/assets';
+import { useContext } from 'react';
+import { AppContext } from '../context/AppContext';
 
 const Upload = () => {
   const handleFileChange = (event) => {
@@ -10,6 +12,9 @@ const Upload = () => {
     }
   };
 
+  const { removeBg } = useContext(AppContext)
+  console.log('removebg=',removeBg)
+
   return (
     <div className="p-16 mt-16">
       <h1 className="text-center text-2xl md:text-3xl lg:text-4xl mt-4 font-semibold bg-gradient-to-r from-gray-900 to-gray-400 bg-clip-text text-transparent">
@@ -17,13 +22,13 @@ const Upload = () => {
       </h1>
 
       <div className="text-center mb-24">
-        <input
+        <input onChange={e => removeBg(e.target.files[0])}
           type="file"
-          name="file"
+          
           id="upload2"
           accept="image/*"
           hidden
-          onChange={handleFileChange}
+          // onChange={handleFileChange}
         />
         <label
           htmlFor="upload2"

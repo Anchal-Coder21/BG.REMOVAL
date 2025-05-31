@@ -26,7 +26,8 @@
 // };
 
 // startServer();
-
+import dotenv from 'dotenv';
+dotenv.config();
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser"; //  ADD THIS
@@ -34,6 +35,9 @@ import bodyParser from "body-parser"; //  ADD THIS
 import connectDB from "./configs/mongodb.js";
 import userRouter from "./routes/userRoutes.js";
 import { clerkWebhooks } from "./controllers/userControllers.js"; //  IMPORT THIS IF NOT YET
+import imageRouter from "./routes/imageRoute.js";
+import ngrok from '@ngrok/ngrok';
+
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -49,10 +53,13 @@ const startServer = async () => {
 
     //  Normal JSON parser for other routes
     app.use(express.json());
+    app.use(express.urlencoded({ extended: true })); // For form data
 
     app.get("/", (req, res) => res.send("API Working"));
 
     app.use("/api/user", userRouter);
+
+    app.use("/api/image",imageRouter);
 
     //  ADD this line if not added
     app.post("/api/webhook", clerkWebhooks);
@@ -60,6 +67,10 @@ const startServer = async () => {
     app.listen(PORT, () => {
       console.log(`Server is running at http://localhost:${PORT}`);
     });
+
+    ngrok.connect({ addr: 8080, authtoken_from_env: true })
+	.then(listener => console.log(`Ingress established at: ${listener.url()}`));
+
   } catch (err) {
     console.error("Failed to start server:", err);
   }
