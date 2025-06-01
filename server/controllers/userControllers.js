@@ -5,8 +5,7 @@ import 'dotenv/config';
 
 
 const clerkWebhooks = async (req, res) => {
-    console.log('hi')
-    console.log( 'req=',req)
+    
     try {
         const Whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET)
 
