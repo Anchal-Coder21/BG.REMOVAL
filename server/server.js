@@ -36,7 +36,7 @@ import connectDB from "./configs/mongodb.js";
 import userRouter from "./routes/userRoutes.js";
 import { clerkWebhooks } from "./controllers/userControllers.js"; //  IMPORT THIS IF NOT YET
 import imageRouter from "./routes/imageRoute.js";
-import ngrok from '@ngrok/ngrok';
+
 
 
 const app = express();
@@ -68,8 +68,7 @@ const startServer = async () => {
       console.log(`Server is running at http://localhost:${PORT}`);
     });
 
-    ngrok.connect({ addr: 8080, authtoken_from_env: true })
-	.then(listener => console.log(`Ingress established at: ${listener.url()}`));
+
 
   } catch (err) {
     console.error("Failed to start server:", err);
