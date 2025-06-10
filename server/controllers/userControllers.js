@@ -5,11 +5,11 @@ import 'dotenv/config';
 
 
 const clerkWebhooks = async (req, res) => {
-    
+
     try {
         const Whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET)
 
-        console.log('s=', process.env.CLERK_WEBHOOK_SECRET)
+      
         await Whook.verify(JSON.stringify(req.body), {
             "svix-id": req.headers["svix-id"],
             "svix-timestamp": req.headers["svix-timestamp"],
@@ -27,6 +27,8 @@ const clerkWebhooks = async (req, res) => {
                     firstName: data.first_name,
                     lastName: data.last_name,
                     photo: data.image_url,
+                    creditBalance: 5
+
                 }
 
                 await userModel.create(userData)

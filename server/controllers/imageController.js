@@ -7,7 +7,7 @@ import userModel from "../models/userModel.js";
 const removeBgImage = async (req,res) => {
 
   
-    console.log('apo-', process.env.CLIPDROP_API)
+
     try {
         
         const {clerkId} = req.user
